@@ -5,20 +5,24 @@
 """
 import json
 
-from yunxunSDK import core, mixins
+from yunxunSDK.core import YunXun
+from yunxunSDK.mixins import TemplateTextMessageMixin, VoiceMessageMixin
 
 
-class TextMessageSender(core.YunXun, mixins.TextMessageMixin):
+class TemplateTextMessageSender(YunXun, TemplateTextMessageMixin):
     """
-    # 发送模板短信
+    # 发送模板普通文本短信
     # http://console.ytx.net/FileDetails
     """
 
     def __init__(self, appid, **kwargs):
+        """
+        :param appid: 使用的应用ID
+        """
         func = kwargs.pop("func", None) or "sms"
         func_url = kwargs.pop("func_url", None) or "TemplateSMS.wx"
-        core.YunXun.__init__(self, func=func, func_url=func_url, **kwargs)
-        mixins.TextMessageMixin.__init__(self, appid=appid, **kwargs)
+        YunXun.__init__(self, func=func, func_url=func_url, **kwargs)
+        TemplateTextMessageMixin.__init__(self, appid=appid, **kwargs)
 
     def send_text_message(self, mobile_list, data_list, template_id):
         """
@@ -29,5 +33,35 @@ class TextMessageSender(core.YunXun, mixins.TextMessageMixin):
         :return:resp_dict 发送结果
         """
         data = self.data(mobile_list, data_list, template_id)
+        resp_dict = self(data=data)
+        return resp_dict
+
+
+class VoiceMessageSender(YunXun, VoiceMessageMixin):
+    """
+    # 发送语音验证码
+    # http://console.ytx.net/FileDetails/FileCodeCallOut
+    """
+
+    def __init__(self, appid, **kwargs):
+        """
+        :param appid: 使用的应用ID
+        """
+        func = kwargs.pop("func", None) or "call"
+        func_url = kwargs.pop("func_url", None) or "CodeCallOut.wx"
+        YunXun.__init__(self, func=func, func_url=func_url, **kwargs)
+        VoiceMessageMixin.__init__(self, appid=appid, **kwargs)
+
+    def send_voice_message(self, mobile, data, **kwargs):
+        """
+        :param mobile: 手机号(只能是一个直线固话或手机，固话前要加区号)
+        :param data: 短信内容(支持英文字母和数字)(长度小于20位)
+        :return:
+        """
+        assert isinstance(mobile, str), "TypeError, <mobile> must be a string"
+        assert isinstance(data, str), "TypeError, <data> must be a string"
+        assert data.isalnum(), "DataError, <data> can only be numbers and letters"
+
+        data = self.data(mobile, data, **kwargs)
         resp_dict = self(data=data)
         return resp_dict
