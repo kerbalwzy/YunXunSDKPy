@@ -6,6 +6,7 @@
 ytx_time_stamp          function           生成符合云讯科技格式要求的时间戳字符串
 ytx_sign                function           生成公共参数Sign
 ytx_authorization       function           生成公共参数Authorization
+YunXun                  Class              功能基类
 """
 import time
 import hashlib
@@ -64,7 +65,7 @@ class YunXun:
 
     def __init__(self, func, func_url, account_sid=conf.ACCOUNT_SID,
                  auth_token=conf.AUTH_TOKEN, version=conf.VERSION,
-                 api_host=conf.API_HOST):
+                 api_host=conf.API_HOST, **kwargs):
         """
         初始化
         :param func: 功能所属分类call【语音类】/sms【消息类】/traffic【流量类】/account【账户类】
@@ -75,33 +76,11 @@ class YunXun:
         :param api_host: 云通信APT接口host
         """
         self.func = func
-        self.funcURL = func_url
+        self.func_url = func_url
         self.account_sid = account_sid
         self.auth_token = auth_token
         self.version = version
         self.api_host = api_host
-
-    def send_text_message(self, *args, **kwargs):
-        # 发送模板短信, http://console.ytx.net/FileDetails
-        raise NotImplementedError("`send_text_message()` must be implemented.")
-
-    def send_voice_code_message(self, *args, **kwargs):
-        # 发送发送语音验证码, http://console.ytx.net/FileDetails/FileCodeCallOut
-        raise NotImplementedError("`send_voice_code_message()` must be implemented.")
-
-    def send_voice_message(self, *args, **kwargs):
-        # 发送固定模板的语音通知, http://console.ytx.net/FileDetails/FileNotice
-        raise NotImplementedError("`send_voice_message()` must be implemented.")
-
-    def bidirectional_call(self, *args, **kwargs):
-        # 双向呼叫, http://console.ytx.net/FileDetails/FileDailBackCall
-        raise NotImplementedError("`bidirectional_call()` must be implemented.")
-
-    def network_traffic_recharge(self, *args, **kwargs):
-        # 流量充值, http://console.ytx.net/FileDetails/FileTrafficVII
-        raise NotImplementedError("`network_traffic_recharge()` must be implemented.")
-
-    # TODO 电话会议、话单查询、余额查询
 
     def __get_path_and_query_string(self):
         """
@@ -113,7 +92,7 @@ class YunXun:
             version=self.version,
             accountSID=self.account_sid,
             func=self.func,
-            funcURL=self.funcURL,
+            funcURL=self.func_url,
             Sign=ytx_sign(account_sid=self.account_sid, auth_token=self.auth_token)
         )
         return path_and_query_string
@@ -140,13 +119,13 @@ class YunXun:
         :param kwargs:
         :return:
         """
-        data = kwargs.pop('data')
+        data = kwargs.pop('data', None)
         assert isinstance(data, bytes), "DataError, <data> must be a bytes object"
 
         resp = requests.request(method=kwargs.pop("method", "POST"),
-                                url=kwargs.pop('url') or self.url,
+                                url=kwargs.pop('url', None) or self.url,
                                 data=data,
-                                headers=kwargs.pop('headers') or self.url,
+                                headers=kwargs.pop('headers', None) or self.headers,
                                 **kwargs)
 
         return resp.json()
