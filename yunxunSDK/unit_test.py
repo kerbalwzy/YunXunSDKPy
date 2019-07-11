@@ -1,4 +1,3 @@
-import json
 import unittest
 
 from yunxunSDK.sender import TemplateTextMessageSender, VoiceMessageSender, TemplateVoiceMessageSender

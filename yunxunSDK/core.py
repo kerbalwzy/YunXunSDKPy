@@ -3,10 +3,10 @@
 """
 核心函数与类：
 名称                      类型                  说明
-ytx_time_stamp          function           生成符合云讯科技格式要求的时间戳字符串
-ytx_sign                function           生成公共参数Sign
-ytx_authorization       function           生成公共参数Authorization
-YunXun                  Class              功能基类
+ytx_time_stamp          function            生成符合云讯科技格式要求的时间戳字符串
+ytx_sign                function            生成公共参数Sign
+ytx_authorization       function            生成公共参数Authorization
+YunXun                  Class               功能基类
 """
 import time
 import hashlib

@@ -1,8 +1,12 @@
 # coding:utf-8
 """
 功能扩展类
-名称                      类型                  说明
-TextMessageMixin         Class           发送普通模版短信的扩展类
+类名                          说明
+TemplateTextMessageMixin    发送模版文本短信的扩展类
+TemplateVoiceMessageMixin   发送模版语音短信的扩展类
+VoiceMessageMixin           发送语音短信的扩展类
+BidirectionalCallMixin      发起双向呼叫的扩展类
+NetworkTrafficRechargeMixin 发起流量充值的扩展类
 """
 import json
 

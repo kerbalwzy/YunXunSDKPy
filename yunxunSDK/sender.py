@@ -1,7 +1,10 @@
 # coding:utf-8
 """
 实际执行各个功能的类
-
+类名                                      功能说明
+TemplateTextMessageSender               发送模版文本短信
+TemplateVoiceMessageSender              发送模版语音短信
+VoiceMessageSender                      发送语音短信
 """
 import json
 
