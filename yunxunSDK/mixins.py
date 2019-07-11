@@ -65,7 +65,7 @@ class TemplateVoiceMessageMixin:
 
     def data(self, mobile, data_list, template_id, time=3, dstclid=None, speed=5):
         """
-        生成发送语音模版短信的请求体数据
+        生成发送模版语音信息的请求体数据
 
         :param mobile: 接收语音通知的手机号，只能是直线固话或手机，固话前要加区号
         :param data_list: 若所采用的模板中有{1}等占位符，该字符串数组的元素分别填充模板占位符

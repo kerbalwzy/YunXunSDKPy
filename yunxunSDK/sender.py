@@ -6,7 +6,7 @@
 import json
 
 from yunxunSDK.core import YunXun
-from yunxunSDK.mixins import TemplateTextMessageMixin, VoiceMessageMixin
+from yunxunSDK.mixins import TemplateTextMessageMixin, VoiceMessageMixin, TemplateVoiceMessageMixin
 
 
 class TemplateTextMessageSender(YunXun, TemplateTextMessageMixin):
@@ -33,6 +33,34 @@ class TemplateTextMessageSender(YunXun, TemplateTextMessageMixin):
         :return:resp_dict 发送结果
         """
         data = self.data(mobile_list, data_list, template_id)
+        resp_dict = self(data=data)
+        return resp_dict
+
+
+class TemplateVoiceMessageSender(YunXun, TemplateVoiceMessageMixin):
+    """
+    # 发送发送语音验证码
+    # http://console.ytx.net/FileDetails/FileCodeCallOut
+    """
+
+    def __init__(self, appid, **kwargs):
+        """
+        :param appid: 使用的应用ID
+        """
+        func = kwargs.pop("func", None) or "call"
+        func_url = kwargs.pop("func_url", None) or "NoticeCall.wx"
+        YunXun.__init__(self, func=func, func_url=func_url, **kwargs)
+        TemplateVoiceMessageMixin.__init__(self, appid=appid, **kwargs)
+
+    def send_template_voice_message(self, mobile, data_list, template_id, **kwargs):
+        """
+        发送模版语音信息
+        :param mobile: 接收语音信息的手机号
+        :param data_list: 模版占位数据
+        :param template_id: 模版id
+        :return:resp_dict 发送结果
+        """
+        data = self.data(mobile, data_list, template_id, **kwargs)
         resp_dict = self(data=data)
         return resp_dict
 
