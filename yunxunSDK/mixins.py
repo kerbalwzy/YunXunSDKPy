@@ -132,6 +132,7 @@ class VoiceMessageMixin:
         raise NotImplementedError("`send_voice_code_message()` must be implemented.")
 
 
+# TODO
 class BidirectionalCallMixin:
     # 双向呼叫
     # http://console.ytx.net/FileDetails/FileDailBackCall
@@ -139,6 +140,7 @@ class BidirectionalCallMixin:
         raise NotImplementedError("`bidirectional_call()` must be implemented.")
 
 
+# TODO
 class NetworkTrafficRechargeMixin:
     # 流量充值
     # http://console.ytx.net/FileDetails/FileTrafficVII
