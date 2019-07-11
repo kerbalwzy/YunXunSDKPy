@@ -18,7 +18,7 @@
 
 - 将克隆下来的仓库中的`yunxunSDK`模块文件夹复制到你的项目目录中, 作为自定工具模块使用
 
-  ![image-20190711111819409](/Users/wzy/GitProrgram/DailyEssay/media/yunxunsdk/image-20190711111819409.png)
+  ![image-20190711111819409](https://github.com/kerbalwzy/DailyEssay/blob/master/media/yunxunsdk/image-20190711111819409.png)
 
 - 编辑`yunxunSDK`模块内的`config.py`文件, 将你的配置添加好
 
